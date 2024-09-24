@@ -22,12 +22,13 @@ export class AppComponent implements AfterViewInit {
     script.setAttribute('data-telegram-login', "TestCompanyLogin_bot");
     script.setAttribute('data-size', 'large');
     // Callback function in global scope
-    document.addEventListener('data-onauth', this.onTelegramAuth.bind(this))
+    script.setAttribute('data-onauth', 'onTelegramAuth(user)');
     script.setAttribute('data-request-access', 'write');
     element.parentElement.replaceChild(script, element);
   }
 
   ngAfterViewInit(): void {
+    (window as any).onTelegramAuth = this.onTelegramAuth.bind(this);
     console.log("telegram login", this.telegramLogin);
     console.log("test login", this.testView);
     this.convertToScript();
