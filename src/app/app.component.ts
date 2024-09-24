@@ -38,11 +38,17 @@ export class AppComponent implements AfterViewInit {
   onTelegramAuth(user:any){
     console.log("User added", user);
     const secretKey = sha256("7970414494:AAEs9eCOgofM77Q7-OiK5BfkMqMFrIqytYU");
-    const dataCheckString = `auth_date=${user.auth_date}\nfirst_name=${user.first_name}\nhash=${user.hash}\nid=${user.id}\nlast_name=${user.last_name}\nphoto_url=${user.photo_url}\nusername=${user.username}`
+    let dataCheckString:any = []
+    Object.keys(user).forEach(key => {
+      if(key !== 'hash') {
+        dataCheckString.push(`${key}=${user[key]}`);
+      }
+    })
+    dataCheckString = dataCheckString.join("\n");
     console.log("data check string", dataCheckString);
     console.log("hmac", sha256.hmac(dataCheckString, secretKey));
     console.log("hexed string", sha256.hmac(dataCheckString, secretKey));
-    if(this.stringToHex(sha256.hmac(dataCheckString, secretKey)) == user.hash) {
+    if(sha256.hmac(dataCheckString, secretKey) == user.hash) {
       console.log("valid user")
     } else {
       console.log("invalid user")
