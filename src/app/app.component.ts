@@ -22,7 +22,7 @@ export class AppComponent implements AfterViewInit {
     script.setAttribute('data-telegram-login', "TestCompanyLogin_bot");
     script.setAttribute('data-size', 'large');
     // Callback function in global scope
-    script.addEventListener('data-onauth', this.onTelegramAuth.bind(this))
+    document.addEventListener('data-onauth', this.onTelegramAuth.bind(this))
     script.setAttribute('data-request-access', 'write');
     element.parentElement.replaceChild(script, element);
   }
