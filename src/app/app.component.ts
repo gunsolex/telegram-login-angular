@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { sha256 } from 'js-sha256';
 
 @Component({
   selector: 'app-root',
@@ -36,6 +37,30 @@ export class AppComponent implements AfterViewInit {
 
   onTelegramAuth(user:any){
     console.log("User added", user);
+    const secretKey = sha256("7970414494:AAEs9eCOgofM77Q7-OiK5BfkMqMFrIqytYU");
+    const dataCheckString = `auth_date=${user.auth_date}\nfirst_name=${user.first_name}\nhash=${user.hash}\nid=${user.id}\nlast_name=${user.last_name}\nphoto_url=${user.photo_url}\nusername=${user.username}`
+    console.log("data check string", dataCheckString);
+    if(this.toHex(sha256.hmac(dataCheckString, secretKey)) == user.hash) {
+      console.log("valid user")
+    } else {
+      console.log("invalid user")
+    }
     this.user = user;
+    console.log("user this", this.user);
+  }
+
+  toHex(code:any) {
+    const bufferText = Buffer.from(code, 'utf8'); // or Buffer.from('hello world')
+    console.log(bufferText); // <Buffer 68 65 6c 6c 6f 20 77 6f 72 6c 64>
+
+    const text = bufferText.toString('hex');
+    // To get hex
+    console.log(text); // 68656c6c6f20776f726c64
+
+    console.log(bufferText.toString()); // or toString('utf8')
+    // hello world
+
+    //one single line
+    return Buffer.from(code).toString('hex')
   }
 }
