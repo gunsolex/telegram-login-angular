@@ -44,6 +44,7 @@ export class AppComponent implements AfterViewInit {
         dataCheckString.push(`${key}=${user[key]}`);
       }
     })
+    dataCheckString.sort();
     dataCheckString = dataCheckString.join("\n");
     console.log("data check string", dataCheckString);
     console.log("hmac", sha256.hmac(dataCheckString, secretKey));
