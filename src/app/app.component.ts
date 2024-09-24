@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { sha256 } from 'js-sha256';
+import HmacSHA256 from 'crypto-js/hmac-sha256';
+import sha256, * as CryptoJS from 'crypto-js/sha256';
 
 @Component({
   selector: 'app-root',
@@ -47,9 +48,9 @@ export class AppComponent implements AfterViewInit {
     dataCheckString.sort();
     dataCheckString = dataCheckString.join("\n");
     console.log("data check string", dataCheckString);
-    console.log("hmac", sha256.hmac(dataCheckString, secretKey));
-    console.log("hexed string", sha256.hmac(dataCheckString, secretKey));
-    if(sha256.hmac(dataCheckString, secretKey) == user.hash) {
+    console.log("hmac", HmacSHA256(dataCheckString, secretKey));
+    console.log("hexed string", HmacSHA256(dataCheckString, secretKey));
+    if(HmacSHA256(dataCheckString, secretKey) == user.hash) {
       console.log("valid user")
     } else {
       console.log("invalid user")
