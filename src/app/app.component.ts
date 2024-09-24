@@ -49,7 +49,7 @@ export class AppComponent implements AfterViewInit {
     dataCheckString = dataCheckString.join("\n");
     console.log("data check string", dataCheckString);
     console.log("hmac", HmacSHA256(dataCheckString, secretKey));
-    console.log("hexed string", HmacSHA256(dataCheckString, secretKey));
+    console.log("hexed string", HmacSHA256(dataCheckString, secretKey).toString());
     if(HmacSHA256(dataCheckString, secretKey) == user.hash) {
       console.log("valid user")
     } else {
