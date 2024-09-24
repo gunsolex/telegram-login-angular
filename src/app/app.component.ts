@@ -41,7 +41,7 @@ export class AppComponent implements AfterViewInit {
     const dataCheckString = `auth_date=${user.auth_date}\nfirst_name=${user.first_name}\nhash=${user.hash}\nid=${user.id}\nlast_name=${user.last_name}\nphoto_url=${user.photo_url}\nusername=${user.username}`
     console.log("data check string", dataCheckString);
     console.log("hmac", sha256.hmac(dataCheckString, secretKey));
-    console.log("hexed string", this.stringToHex(sha256.hmac(dataCheckString, secretKey)));
+    console.log("hexed string", sha256.hmac(dataCheckString, secretKey));
     if(this.stringToHex(sha256.hmac(dataCheckString, secretKey)) == user.hash) {
       console.log("valid user")
     } else {
@@ -49,11 +49,5 @@ export class AppComponent implements AfterViewInit {
     }
     this.user = user;
     console.log("user this", this.user);
-  }
-
-  stringToHex(str: string): string {
-    return str.split('')
-      .map(char => char.charCodeAt(0).toString(16).padStart(2, '0')) // Convert each char to hex
-      .join(''); // Join the hex values into a single string
   }
 }
