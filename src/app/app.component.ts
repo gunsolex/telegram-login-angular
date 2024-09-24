@@ -40,6 +40,7 @@ export class AppComponent implements AfterViewInit {
     const secretKey = sha256("7970414494:AAEs9eCOgofM77Q7-OiK5BfkMqMFrIqytYU");
     const dataCheckString = `auth_date=${user.auth_date}\nfirst_name=${user.first_name}\nhash=${user.hash}\nid=${user.id}\nlast_name=${user.last_name}\nphoto_url=${user.photo_url}\nusername=${user.username}`
     console.log("data check string", dataCheckString);
+    console.log("hmac", sha256.hmac(dataCheckString, secretKey));
     console.log("hexed string", this.stringToHex(sha256.hmac(dataCheckString, secretKey)));
     if(this.stringToHex(sha256.hmac(dataCheckString, secretKey)) == user.hash) {
       console.log("valid user")
