@@ -1,15 +1,17 @@
+import { CommonModule } from '@angular/common';
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, CommonModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
 export class AppComponent implements AfterViewInit {
   title = 'TelegramLogin';
+  user:any;
 
   @ViewChild('telegramScript') telegramLogin:any;
   @ViewChild('testView') testView:any;
@@ -29,5 +31,10 @@ export class AppComponent implements AfterViewInit {
     console.log("telegram login", this.telegramLogin);
     console.log("test login", this.testView);
     this.convertToScript();
+  }
+
+  onTelegramAuth(user:any){
+    console.log("User added", user);
+    this.user = user;
   }
 }
